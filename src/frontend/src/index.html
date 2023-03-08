@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script
+            type="module"
+            src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+        ></script>
+        <style>
+            {{styles}}
+        </style>
+    </head>
+    <body>
+        <div class="side-panel" id="side-panel"></div>
+        <input id="input" />
+        <button id="button" class="ask-button">Ask</button>
+        <div class="result" id="result">
+            <zero-md>
+                <script type="text/markdown" id="md">Ready to write your Cloudformation</script>
+            </zero-md>
+        </div>
+    </body>
+    <script>
+        {{js}}
+    </script>
+</html>
