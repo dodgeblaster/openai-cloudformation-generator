@@ -1,5 +1,11 @@
 # ChatGPT Cloudformation Generation
 
+## Endpoint
+
+https://nds06wx7zd.execute-api.us-east-1.amazonaws.com/Prod/
+
+## Description
+
 This app allows you to
 
 -   click on any CloudFormation resource
