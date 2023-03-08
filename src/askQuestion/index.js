@@ -44,7 +44,8 @@ async function saveAnswer(props) {
 /**
  * ChatGPT
  */
-async function askQuestion(question) {
+async function askQuestion(resource) {
+    const chatGptQuestion = `Write a cloudformation template in yml that includes a ${resource} resource.`
     const secret = await getSecret()
     const options = {
         method: 'POST',
@@ -54,18 +55,18 @@ async function askQuestion(question) {
         },
         body: JSON.stringify({
             model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: question }]
+            messages: [{ role: 'user', content: chatGptQuestion }]
         })
     }
 
-    return fetch('https://api.openai.com/v1/chat/completions', options).then(
-        (response) => response.json()
-    )
+    return fetch('https://api.openai.com/v1/chat/completions', options)
+        .then((response) => response.json())
+        .then((x) => x.choices[0].message.content)
 }
 
 exports.handler = async (event) => {
-    const question = JSON.parse(event.body).input
-    const savedRes = await getCachedAnswer(question)
+    const input = JSON.parse(event.body).input
+    const savedRes = await getCachedAnswer(input)
     if (savedRes) {
         return {
             statusCode: 200,
@@ -76,10 +77,9 @@ exports.handler = async (event) => {
         }
     }
 
-    const res = await askQuestion(question)
-    const content = res.choices[0].message.content
+    const content = await askQuestion(input)
     await saveAnswer({
-        id: question,
+        id: input,
         content
     })
 

@@ -7,7 +7,7 @@ const submit = (text) => {
     const options = {
         method: 'POST',
         body: JSON.stringify({
-            input: text || document.getElementById('input').value
+            input: text
         })
     }
 
@@ -41,11 +41,10 @@ const getCloudformationResources = () => {
             Object.keys(x.ResourceTypes).forEach((name) => {
                 const id = name.replaceAll(':', '').toLowerCase()
                 document.getElementById(id).addEventListener('click', () => {
-                    const chatGptQuestion = `Write a cloudformation template in yml that includes a ${name} resource.`
-                    submit(chatGptQuestion)
+                    submit(name)
                 })
             })
         })
 }
 
-document.onload = getCloudformationResources
+getCloudformationResources()
